@@ -212,6 +212,39 @@ function submitTest() {
     }
   });
 
+  // 🔥 SEND DATA TO GOOGLE SHEETS
+  fetch("PASTE_YOUR_WEB_APP_URL_HERE", {
+    method: "POST",
+    body: JSON.stringify({
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      phone: document.getElementById("phone").value,
+
+      sectionA: sectionScores.A,
+      sectionB: sectionScores.B,
+      sectionC: sectionScores.C,
+      sectionD: sectionScores.D,
+      sectionE: sectionScores.E,
+
+      total: total
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(res => res.text())
+  .then(data => console.log("RESPONSE:", data))
+  .catch(err => console.log("ERROR:", err));
+
+  document.body.innerHTML = `
+    <img src="logo.png" style="display:block;margin:20px auto;max-width:120px;">
+    <h1>Test Completed</h1>
+    <p>Thank you. Your response has been registered.<br>
+    Please contact the administrator for the next steps.</p>
+  `;
+}
+  });
+
   // 🔥 GOOGLE SHEET
   fetch("PASTE_YOUR_WEB_APP_URL_HERE", {
     method: "POST",
