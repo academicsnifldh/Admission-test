@@ -4,128 +4,72 @@
   <title>Admission Test</title>
 
   <style>
-    body {
-      font-family: Helvetica, Arial;
-      text-align: center;
-      padding: 20px;
-    }
+body {
+  font-family: Helvetica;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
 
-    /* LOGO */
-    #logo {
-      display: block;
-      margin: 0 auto 10px;
-      max-width: 120px;
-      transition: all 0.5s ease;
-    }
+#timer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: black;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+}
 
-    .logo-top-left {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      margin: 0;
-    }
+#question-box {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 20px;
+}
 
-    /* HEADINGS */
-    h1 { margin: 5px; }
-    h2 { margin: 5px; font-size: 18px; }
+#options-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    .small-title h1 { font-size: 16px; }
-    .small-title h2 { font-size: 14px; }
+.option {
+  width: 320px;
+  margin: 10px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  text-align: center;
+}
 
-    /* SECTION */
-    #section {
-      font-weight: bold;
-      margin: 10px;
-      font-size: 16px;
-    }
+.option.selected {
+  background: black;
+  color: white;
+}
 
-    /* TIMER */
-    #timer {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: black;
-      color: white;
-      padding: 10px;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: bold;
-    }
+button {
+  background: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
 
-    /* PROGRESS */
-    #progress {
-      font-size: 16px;
-      margin: 10px;
-    }
-
-    /* QUESTION */
-    #question-box {
-      font-size: 18px;
-      font-weight: bold;
-      margin: 20px;
-    }
-
-    /* OPTIONS */
-    #options-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .option {
-      width: 320px;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: white;
-      cursor: pointer;
-      text-align: center;
-      transition: 0.2s;
-    }
-
-    .option input {
-      display: none;
-    }
-
-    .option.selected {
-      background: black;
-      color: white;
-      border-color: black;
-    }
-
-    /* BUTTONS */
-    button {
-      background: black;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: none;
-      margin-top: 20px;
-      font-weight: bold;
-      text-transform: uppercase;
-      cursor: pointer;
-    }
-
-    /* INPUTS */
-    input {
-      display: block;
-      margin: 10px auto;
-      padding: 10px;
-      width: 250px;
-      text-align: center;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-    }
-
-    /* RULES */
-    .rules {
-      max-width: 700px;
-      margin: auto;
-      text-align: left;
-      font-size: 14px;
-    }
-  </style>
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 12px;
+  width: 250px;
+}
+</style>
 </head>
 
 <body>
