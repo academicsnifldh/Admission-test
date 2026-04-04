@@ -144,9 +144,8 @@ function loadQuestion() {
 
   q.o.forEach(function(opt) {
     html += `
-<div class="option" onclick="selectOption(this)">
-  <input type="radio" name="opt" value="${opt}">
-  <span>${opt}</span>
+<div class="option" onclick="selectOption(this)" data-value="${opt}">
+  ${opt}
 </div>`;
   });
 
@@ -160,8 +159,9 @@ function selectOption(el) {
 
   if (testSubmitted) return;
 
-  document.querySelectorAll(".option").forEach(function(o){
-    o.classList.remove("selected");
+  document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+
+  el.classList.add("selected");
   });
 
   el.classList.add("selected");
@@ -175,7 +175,14 @@ function nextQuestion() {
 
   if (testSubmitted) return;
 
-  let selected = document.querySelector('input[name="opt"]:checked');
+  let selected = document.querySelector(".option.selected");
+
+if (!selected) {
+  alert("Select an option");
+  return;
+}
+
+answers[currentIndex] = selected.getAttribute("data-value");
 
   if (!selected) {
     alert("Select an option");
