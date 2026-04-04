@@ -1,5 +1,15 @@
 // =========================
-// 🔐 ADMIN LOGIN
+// VARIABLES
+// =========================
+let currentIndex = 0;
+let answers = [];
+let timer;
+let timeLeft = 60 * 60;
+let warningCount = 0;
+let testSubmitted = false;
+
+// =========================
+// ADMIN LOGIN
 // =========================
 function adminLogin() {
   let email = document.getElementById("adminEmail").value;
@@ -14,7 +24,7 @@ function adminLogin() {
 }
 
 // =========================
-// 📜 RULES FLOW
+// RULES
 // =========================
 function toggleRules() {
   document.getElementById("rulesNextBtn").disabled =
@@ -27,25 +37,10 @@ function goToLogin() {
 }
 
 // =========================
-// VARIABLES
+// ANTI-CHEAT
 // =========================
-let currentIndex = 0;
-let answers = [];
-let timer;
-let timeLeft = 60 * 60;
-let warningCount = 0;
-let testSubmitted = false;
-
-// =========================
-// 🚫 ANTI-CHEAT
-// =========================
-document.addEventListener("contextmenu", function (e) {
-  e.preventDefault();
-});
-
 document.addEventListener("visibilitychange", function () {
   if (document.hidden && !testSubmitted) {
-
     warningCount++;
 
     if (warningCount === 1) {
@@ -58,7 +53,7 @@ document.addEventListener("visibilitychange", function () {
 });
 
 // =========================
-// 🔀 SHUFFLE
+// SHUFFLE
 // =========================
 function shuffle(arr) {
   let copy = [...arr];
@@ -70,7 +65,7 @@ function shuffle(arr) {
 }
 
 // =========================
-// 🧠 GENERATE QUESTIONS
+// GENERATE QUESTIONS
 // =========================
 function generateQuestions() {
 
@@ -78,7 +73,7 @@ function generateQuestions() {
   let B = shuffle(questionSections.B).slice(0, 10).map(q => ({...q, section: "B"}));
   let C = shuffle(questionSections.C).slice(0, 15).map(q => ({...q, section: "C"}));
   let D = shuffle(questionSections.D).slice(0, 15).map(q => ({...q, section: "D"}));
-  let E = questionSections.E.map(q => ({...q, section: "E"}));
+  let E = questionSections.E.map(q => ({...q, section: "E"})); // ✅ FIXED
 
   return [...A, ...B, ...C, ...D, ...E];
 }
@@ -86,7 +81,7 @@ function generateQuestions() {
 let selectedQuestions = generateQuestions();
 
 // =========================
-// ▶ START TEST
+// START TEST
 // =========================
 function startTest() {
 
@@ -118,15 +113,13 @@ function startTest() {
 
     timeLeft--;
 
-    if (timeLeft < 0) {
-      submitTest();
-    }
+    if (timeLeft < 0) submitTest();
 
   }, 1000);
 }
 
 // =========================
-// 📥 LOAD QUESTION
+// LOAD QUESTION
 // =========================
 function loadQuestion() {
 
@@ -142,7 +135,7 @@ function loadQuestion() {
 
   let html = "";
 
-  q.o.forEach(function(opt) {
+  q.o.forEach(opt => {
     html += `
     <div class="option" onclick="selectOption(this)">
       <input type="radio" name="opt" value="${opt}">
@@ -154,22 +147,19 @@ function loadQuestion() {
 }
 
 // =========================
-// ✅ SELECT OPTION
+// SELECT OPTION
 // =========================
 function selectOption(el) {
 
   if (testSubmitted) return;
 
-  document.querySelectorAll(".option").forEach(function(o){
-    o.classList.remove("selected");
-  });
-
+  document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
   el.classList.add("selected");
   el.querySelector("input").checked = true;
 }
 
 // =========================
-// ➡ NEXT QUESTION
+// NEXT QUESTION
 // =========================
 function nextQuestion() {
 
@@ -193,7 +183,7 @@ function nextQuestion() {
 }
 
 // =========================
-// 📤 SUBMIT TEST
+// SUBMIT TEST
 // =========================
 function submitTest() {
 
@@ -205,60 +195,24 @@ function submitTest() {
   let sectionScores = { A:0, B:0, C:0, D:0, E:0 };
   let total = 0;
 
-  selectedQuestions.forEach(function(q, i){
+  selectedQuestions.forEach((q, i) => {
     if (answers[i] === q.a) {
       sectionScores[q.section]++;
       total++;
     }
   });
 
-  // 🔥 SEND DATA TO GOOGLE SHEETS
   fetch("https://script.google.com/macros/s/AKfycbxIXT8lLdUmWrPluIhXuCU9BtGNTuqPh6iaxQ-7doG64rYOPwxZmtafMozBg8NXloJ1/exec", {
     method: "POST",
     body: JSON.stringify({
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,
       phone: document.getElementById("phone").value,
-
       sectionA: sectionScores.A,
       sectionB: sectionScores.B,
       sectionC: sectionScores.C,
       sectionD: sectionScores.D,
       sectionE: sectionScores.E,
-
-      total: total
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  .then(res => res.text())
-  .then(data => console.log("RESPONSE:", data))
-  .catch(err => console.log("ERROR:", err));
-
-  document.body.innerHTML = `
-    <img src="logo.png" style="display:block;margin:20px auto;max-width:120px;">
-    <h1>Test Completed</h1>
-    <p>Thank you. Your response has been registered.<br>
-    Please contact the administrator for the next steps.</p>
-  `;
-}
-  });
-
-  // 🔥 GOOGLE SHEET
-  fetch("PASTE_YOUR_WEB_APP_URL_HERE", {
-    method: "POST",
-    body: JSON.stringify({
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      phone: document.getElementById("phone").value,
-
-      sectionA: sectionScores.A,
-      sectionB: sectionScores.B,
-      sectionC: sectionScores.C,
-      sectionD: sectionScores.D,
-      sectionE: sectionScores.E,
-
       total: total
     }),
     headers: {
@@ -266,7 +220,6 @@ function submitTest() {
     }
   });
 
-  // FINAL SCREEN
   document.body.innerHTML = `
     <img src="logo.png" style="display:block;margin:20px auto;max-width:120px;">
     <h1>Test Completed</h1>
