@@ -213,7 +213,7 @@ function submitTest() {
   });
 
   // 🔥 SEND DATA TO GOOGLE SHEETS
-  fetch("PASTE_YOUR_WEB_APP_URL_HERE", {
+  fetch("https://script.google.com/macros/s/AKfycbxIXT8lLdUmWrPluIhXuCU9BtGNTuqPh6iaxQ-7doG64rYOPwxZmtafMozBg8NXloJ1/exec", {
     method: "POST",
     body: JSON.stringify({
       name: document.getElementById("name").value,
