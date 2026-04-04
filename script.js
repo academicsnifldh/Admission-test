@@ -144,10 +144,10 @@ function loadQuestion() {
 
   q.o.forEach(function(opt) {
     html += `
-    <div class="option" onclick="selectOption(this)">
-      <input type="radio" name="opt" value="${opt}">
-      ${opt}
-    </div>`;
+<div class="option" onclick="selectOption(this)">
+  <input type="radio" name="opt" value="${opt}">
+  <span>${opt}</span>
+</div>`;
   });
 
   document.getElementById("options-box").innerHTML = html;
