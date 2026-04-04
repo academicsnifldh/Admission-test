@@ -59,7 +59,9 @@ function shuffle(arr) {
   let copy = [...arr];
   for (let i = copy.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
+    let temp = copy[i];
+    copy[i] = copy[j];
+    copy[j] = temp;
   }
   return copy;
 }
@@ -73,7 +75,7 @@ function generateQuestions() {
   let B = shuffle(questionSections.B).slice(0, 10).map(q => ({...q, section: "B"}));
   let C = shuffle(questionSections.C).slice(0, 15).map(q => ({...q, section: "C"}));
   let D = shuffle(questionSections.D).slice(0, 15).map(q => ({...q, section: "D"}));
-  let E = questionSections.E.map(q => ({...q, section: "E"})); // ✅ FIXED
+  let E = questionSections.E.map(q => ({...q, section: "E"}));
 
   return [...A, ...B, ...C, ...D, ...E];
 }
@@ -109,11 +111,13 @@ function startTest() {
     let s = timeLeft % 60;
 
     document.getElementById("timer").innerText =
-      `${m}:${s < 10 ? "0" + s : s}`;
+      m + ":" + (s < 10 ? "0" + s : s);
 
     timeLeft--;
 
-    if (timeLeft < 0) submitTest();
+    if (timeLeft < 0) {
+      submitTest();
+    }
 
   }, 1000);
 }
@@ -129,13 +133,13 @@ function loadQuestion() {
 
   document.getElementById("section").innerText = "Section " + q.section;
   document.getElementById("question-box").innerText =
-    `Q${currentIndex + 1}. ${q.q}`;
+    "Q" + (currentIndex + 1) + ". " + q.q;
   document.getElementById("progress").innerText =
-    `${currentIndex + 1} / 60`;
+    (currentIndex + 1) + " / 60";
 
   let html = "";
 
-  q.o.forEach(opt => {
+  q.o.forEach(function(opt) {
     html += `
     <div class="option" onclick="selectOption(this)">
       <input type="radio" name="opt" value="${opt}">
@@ -153,7 +157,10 @@ function selectOption(el) {
 
   if (testSubmitted) return;
 
-  document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+  document.querySelectorAll(".option").forEach(function(o){
+    o.classList.remove("selected");
+  });
+
   el.classList.add("selected");
   el.querySelector("input").checked = true;
 }
@@ -202,28 +209,36 @@ function submitTest() {
     }
   });
 
-  fetch("https://script.google.com/macros/s/AKfycbxIXT8lLdUmWrPluIhXuCU9BtGNTuqPh6iaxQ-7doG64rYOPwxZmtafMozBg8NXloJ1/exec", {
+  // 🔥 SEND DATA TO GOOGLE SHEETS
+  fetch("https://script.google.com/macros/s/AKfycbz5VxXN0KtGyLW7sYznbSXXIqc8U1omTjejdpB8cgxuLOFDsGVRfvcRp47CtQC3DvwS/exec", {
     method: "POST",
     body: JSON.stringify({
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,
       phone: document.getElementById("phone").value,
+
       sectionA: sectionScores.A,
       sectionB: sectionScores.B,
       sectionC: sectionScores.C,
       sectionD: sectionScores.D,
       sectionE: sectionScores.E,
+
       total: total
     }),
     headers: {
       "Content-Type": "application/json"
     }
-  });
+  })
+  .then(res => res.text())
+  .then(data => console.log("RESPONSE:", data))
+  .catch(err => console.log("ERROR:", err));
 
+  // FINAL SCREEN
   document.body.innerHTML = `
     <img src="logo.png" style="display:block;margin:20px auto;max-width:120px;">
     <h1>Test Completed</h1>
     <p>Thank you. Your response has been registered.<br>
     Please contact the administrator for the next steps.</p>
   `;
+}
 }
