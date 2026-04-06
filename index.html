@@ -6,15 +6,22 @@
   <style>
     body {
       font-family: Arial;
-      text-align: center;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      background: #f5f5f5;
     }
 
-    /* LOGO */
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    /* LOGO FIX */
     #logo {
-      width: 120px;
-      height: auto;
+      width: 120px !important;
+      height: auto !important;
       display: block;
       margin: 20px auto;
     }
@@ -23,15 +30,36 @@
       position: fixed;
       top: 20px;
       left: 20px;
-      width: 80px;
+      width: 80px !important;
       margin: 0;
     }
 
-    /* HEADINGS */
-    h1 { margin-bottom: 5px; }
-    h3 { margin-top: 0; }
+    h1 { margin: 10px 0; }
+    h3 { margin: 5px 0; }
 
-    /* TIMER */
+    /* INPUTS STACKED */
+    input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
     #timer {
       position: fixed;
       top: 20px;
@@ -44,55 +72,20 @@
       font-weight: bold;
     }
 
-    /* INPUT ROW */
-    .input-row {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .input-row input {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      width: 180px;
-    }
-
-    button {
-      background: black;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* QUESTION */
     #question-box {
       font-size: 20px;
       font-weight: bold;
-      margin: 25px 0;
-    }
-
-    /* OPTIONS */
-    #options-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
+      margin: 20px 0;
     }
 
     .option {
-      width: 350px;
+      width: 100%;
       padding: 15px;
+      margin: 10px 0;
       border: 1px solid #ccc;
       border-radius: 8px;
       background: white;
       cursor: pointer;
-      text-align: center;
-      font-size: 18px;
     }
 
     .option.selected {
@@ -104,6 +97,8 @@
 
 <body>
 
+<div class="container">
+
 <img src="logo.png" id="logo">
 
 <!-- ADMIN LOGIN -->
@@ -111,9 +106,9 @@
   <h2>ADMIN LOGIN</h2>
   <p>Ask the admin to log in</p>
 
-  <input type="email" id="adminEmail" placeholder="Email">
+  <input id="adminEmail" placeholder="Email">
   <input type="password" id="adminPassword" placeholder="Password">
-  <br><br>
+
   <button onclick="adminLogin()">LOGIN</button>
 </div>
 
@@ -121,10 +116,10 @@
 <div id="rules-box" style="display:none;">
   <h1>Admission Test</h1>
 
-  <p style="text-align:left; max-width:600px; margin:auto;">
-    1) This test has 60 questions, all of them are compulsory.<br><br>
+  <p style="text-align:left;">
+    1) This test has 50 questions, all of them are compulsory.<br><br>
     2) For each correct response, one mark will be awarded. No marks will be awarded for an incorrect response and there will be no negative marking.<br><br>
-    3) This is a time bound test. You will be given 60 mins to complete the test (approximately 1 minute/question).<br><br>
+    3) This is a time bound test. You will be awarded 50 mins to complete the test (approximately 1 minute/question).<br><br>
     4) Timer will begin as soon as you click on "Start Test".<br><br>
     5) Attempting to cheat (whether by switching browser tabs or using a different device) will result in the test being automatically submitted and the score achieved thus far will be registered.<br><br>
     6) There will be no re-attempts for any candidate.<br><br>
@@ -133,7 +128,6 @@
 
   <br>
   <input type="checkbox" id="rulesCheck" onclick="toggleRules()"> I have read the rules
-  <br><br>
   <button id="rulesNextBtn" onclick="goToLogin()" disabled>NEXT</button>
 </div>
 
@@ -142,12 +136,11 @@
   <h1>Admission Test</h1>
   <h3>Fashion Design</h3>
 
-  <div class="input-row">
-    <input type="text" id="name" placeholder="Name">
-    <input type="email" id="email" placeholder="Email">
-    <input type="text" id="phone" placeholder="Phone (10 digits)">
-    <button onclick="startTest()">START TEST</button>
-  </div>
+  <input id="name" placeholder="Name">
+  <input id="email" placeholder="Email">
+  <input id="phone" placeholder="Phone (10 digits)">
+
+  <button onclick="startTest()">START TEST</button>
 </div>
 
 <!-- TEST -->
@@ -161,6 +154,8 @@
   <div id="options-box"></div>
 
   <button onclick="nextQuestion()">Next Question</button>
+</div>
+
 </div>
 
 <script src="questions.js"></script>
