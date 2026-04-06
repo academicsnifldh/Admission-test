@@ -6,7 +6,6 @@ let timeLeft = 60 * 60;
 let warningCount = 0;
 let testSubmitted = false;
 
-// LOGIN
 function adminLogin() {
   let email = document.getElementById("adminEmail").value;
   let password = document.getElementById("adminPassword").value;
@@ -19,7 +18,6 @@ function adminLogin() {
   }
 }
 
-// RULES
 function toggleRules() {
   document.getElementById("rulesNextBtn").disabled =
     !document.getElementById("rulesCheck").checked;
@@ -30,7 +28,6 @@ function goToLogin() {
   document.getElementById("login-box").style.display = "block";
 }
 
-// ANTI CHEAT
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && !testSubmitted) {
     warningCount++;
@@ -43,33 +40,20 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-// SHUFFLE
 function shuffle(arr) {
   return arr.sort(() => Math.random() - 0.5);
 }
 
-// QUESTIONS
 function generateQuestions() {
   let A = shuffle(questionSections.A).slice(0,10).map(q=>({...q,section:"A"}));
   let B = shuffle(questionSections.B).slice(0,10).map(q=>({...q,section:"B"}));
   let C = shuffle(questionSections.C).slice(0,15).map(q=>({...q,section:"C"}));
   let D = shuffle(questionSections.D).slice(0,15).map(q=>({...q,section:"D"}));
   let E = questionSections.E.map(q=>({...q,section:"E"}));
-
   return [...A,...B,...C,...D,...E];
 }
 
-// START TEST
 function startTest() {
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
-  let phone = document.getElementById("phone").value;
-
-  if (!name || !email || phone.length !== 10 || isNaN(phone)) {
-    alert("Enter valid details");
-    return;
-  }
-
   selectedQuestions = generateQuestions();
 
   document.getElementById("logo").classList.add("logo-top-left");
@@ -82,17 +66,13 @@ function startTest() {
   timer = setInterval(() => {
     let m = Math.floor(timeLeft / 60);
     let s = timeLeft % 60;
-
     document.getElementById("timer").innerText =
       m + ":" + (s < 10 ? "0" + s : s);
-
     timeLeft--;
-
     if (timeLeft < 0) submitTest();
   }, 1000);
 }
 
-// LOAD QUESTION
 function loadQuestion() {
   let q = selectedQuestions[currentIndex];
 
@@ -111,13 +91,11 @@ function loadQuestion() {
   document.getElementById("options-box").innerHTML = html;
 }
 
-// SELECT
 function selectOption(el) {
   document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
   el.classList.add("selected");
 }
 
-// NEXT
 function nextQuestion() {
   let selected = document.querySelector(".option.selected");
 
@@ -136,18 +114,11 @@ function nextQuestion() {
   }
 }
 
-// SUBMIT
 function submitTest() {
   if (testSubmitted) return;
   testSubmitted = true;
 
   clearInterval(timer);
-
-  fetch("https://script.google.com/macros/s/AKfycbxIXT8lLdUmWrPluIhXuCU9BtGNTuqPh6iaxQ-7doG64rYOPwxZmtafMozBg8NXloJ1/exec", {
-    method: "POST",
-    body: JSON.stringify({ name: document.getElementById("name").value }),
-    headers: { "Content-Type": "application/json" }
-  });
 
   document.body.innerHTML = `
     <img src="logo.png" style="width:120px; display:block; margin:20px auto;">
