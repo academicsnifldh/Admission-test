@@ -120,18 +120,45 @@ function submitTest() {
 
   clearInterval(timer);
 
-  document.body.innerHTML = `
-  <div style="max-width:500px; margin:50px auto; text-align:center;">
-    
-    <img src="logo.png" style="width:120px; display:block; margin:20px auto;">
-    
-    <h1>Test Completed</h1>
-    
-    <p style="line-height:1.6;">
-      Thank you. Your response has been registered.<br>
-      Please contact the administrator for the next steps.
-    </p>
+  let sectionScores = { A:0, B:0, C:0, D:0, E:0 };
+  let total = 0;
 
-  </div>
-`;
+  selectedQuestions.forEach((q, i) => {
+    if (answers[i] === q.a) {
+      sectionScores[q.section]++;
+      total++;
+    }
+  });
+
+  // 🔥 EMAILJS SEND
+  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+
+    sectionA: sectionScores.A,
+    sectionB: sectionScores.B,
+    sectionC: sectionScores.C,
+    sectionD: sectionScores.D,
+    sectionE: sectionScores.E,
+
+    total: total
+  })
+  .then(function(response) {
+    console.log("SUCCESS", response);
+  }, function(error) {
+    console.log("FAILED", error);
+  });
+
+  // THANK YOU SCREEN
+  document.body.innerHTML = `
+    <div style="max-width:500px; margin:50px auto; text-align:center;">
+      <img src="logo.png" style="width:120px; margin-bottom:20px;">
+      <h1>Test Completed</h1>
+      <p>
+        Thank you. Your response has been registered.<br>
+        Please contact the administrator for the next steps.
+      </p>
+    </div>
+  `;
 }
