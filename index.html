@@ -4,127 +4,157 @@
   <title>Admission Test</title>
 
   <style>
-body {
-  font-family: Arial;
-  text-align: center;
-  margin: 0;
-  padding: 20px;
-}
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+    }
 
-#timer {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: black;
-  color: white;
-  padding: 10px 15px;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: bold;
-}
+    /* LOGO */
+    #logo {
+      width: 120px;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+    }
 
-#question-box {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 25px 0;
-}
+    .logo-top-left {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 80px;
+      margin: 0;
+    }
 
-#options-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
+    /* HEADINGS */
+    h1 { margin-bottom: 5px; }
+    h3 { margin-top: 0; }
 
-.option {
-  width: 350px;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: white;
-  cursor: pointer;
-  text-align: center;
-  font-size: 18px;
-  transition: 0.2s;
-}
+    /* TIMER */
+    #timer {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: black;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+    }
 
-.option:hover {
-  background: #f5f5f5;
-}
+    /* INPUT ROW */
+    .input-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
 
-.option.selected {
-  background: black;
-  color: white;
-  border: 1px solid black;
-}
+    .input-row input {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 180px;
+    }
 
-button {
-  background: black;
-  color: white;
-  padding: 12px 25px;
-  border-radius: 8px;
-  border: none;
-  margin-top: 25px;
-  font-weight: bold;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-</style>
+    button {
+      background: black;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* QUESTION */
+    #question-box {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 25px 0;
+    }
+
+    /* OPTIONS */
+    #options-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .option {
+      width: 350px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .option.selected {
+      background: black;
+      color: white;
+    }
+  </style>
 </head>
 
 <body>
 
-<img id="logo" src="logo.png">
+<img src="logo.png" id="logo">
 
-<!-- ================= ADMIN LOGIN ================= -->
+<!-- ADMIN LOGIN -->
 <div id="admin-box">
-  <h1>ADMIN LOGIN</h1>
+  <h2>ADMIN LOGIN</h2>
   <p>Ask the admin to log in</p>
 
-  <input type="email" id="adminEmail" placeholder="Admin Email">
+  <input type="email" id="adminEmail" placeholder="Email">
   <input type="password" id="adminPassword" placeholder="Password">
-
-  <button onclick="adminLogin()">Login</button>
+  <br><br>
+  <button onclick="adminLogin()">LOGIN</button>
 </div>
 
-<!-- ================= RULES ================= -->
+<!-- RULES -->
 <div id="rules-box" style="display:none;">
   <h1>Admission Test</h1>
 
-  <div class="rules">
-    <p>1) This test has 60 questions, all of them are compulsory.</p>
-    <p>2) For each correct response, one mark will be awarded. No marks will be awarded for an incorrect response and there will be no negative marking.</p>
-    <p>3) This is a time bound test. You will be given 60 mins to complete the test (approximately 1 minute/question).</p>
-    <p>4) Timer will begin as soon as you click on "Start Test".</p>
-    <p>5) Attempting to cheat (whether by switching browser tabs or using a different device) will result in the test being automatically submitted and the score achieved thus far will be registered.</p>
-    <p>6) There will be no re-attempts for any candidate.</p>
+  <p style="text-align:left; max-width:600px; margin:auto;">
+    1) This test has 60 questions, all of them are compulsory.<br><br>
+    2) For each correct response, one mark will be awarded. No marks will be awarded for an incorrect response and there will be no negative marking.<br><br>
+    3) This is a time bound test. You will be given 60 mins to complete the test (approximately 1 minute/question).<br><br>
+    4) Timer will begin as soon as you click on "Start Test".<br><br>
+    5) Attempting to cheat (whether by switching browser tabs or using a different device) will result in the test being automatically submitted and the score achieved thus far will be registered.<br><br>
+    6) There will be no re-attempts for any candidate.<br><br>
+    For any queries regarding the test, contact the administrator before clicking on start test.
+  </p>
 
-    <p><b>For any queries regarding the test, contact the administrator before clicking on start test.</b></p>
-  </div>
-
-  <input type="checkbox" id="rulesCheck" onchange="toggleRules()"> I have read the rules
-  <button id="rulesNextBtn" onclick="goToLogin()" disabled>Next</button>
+  <br>
+  <input type="checkbox" id="rulesCheck" onclick="toggleRules()"> I have read the rules
+  <br><br>
+  <button id="rulesNextBtn" onclick="goToLogin()" disabled>NEXT</button>
 </div>
 
-<!-- ================= CANDIDATE INFO ================= -->
+<!-- STUDENT INFO -->
 <div id="login-box" style="display:none;">
   <h1>Admission Test</h1>
-  <h2>Fashion Design</h2>
+  <h3>Fashion Design</h3>
 
-  <input type="text" id="name" placeholder="Name">
-  <input type="email" id="email" placeholder="Email">
-  <input type="tel" id="phone" placeholder="Phone (10 digits)" maxlength="10">
-
-  <button onclick="startTest()">Start Test</button>
+  <div class="input-row">
+    <input type="text" id="name" placeholder="Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="text" id="phone" placeholder="Phone (10 digits)">
+    <button onclick="startTest()">START TEST</button>
+  </div>
 </div>
 
-<!-- ================= TEST ================= -->
-<div id="test-box" style="display:none;" class="small-title">
-  <h1>Admission Test</h1>
-  <h2>Fashion Design</h2>
+<!-- TEST -->
+<div id="test-box" style="display:none;">
+  <div id="timer">60:00</div>
 
-  <div id="section"></div>
-  <div id="timer"></div>
+  <h3 id="section"></h3>
   <div id="progress"></div>
 
   <div id="question-box"></div>
@@ -133,7 +163,6 @@ button {
   <button onclick="nextQuestion()">Next Question</button>
 </div>
 
-<!-- ================= SCRIPTS ================= -->
 <script src="questions.js"></script>
 <script src="script.js"></script>
 
