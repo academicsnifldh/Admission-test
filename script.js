@@ -131,7 +131,7 @@ function submitTest() {
   });
 
   // 🔥 EMAILJS SEND
-  emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+  emailjs.send("service_s2qqq5w", "template_ry59j2t", {
     name: document.getElementById("name").value,
     email: document.getElementById("email").value,
     phone: document.getElementById("phone").value,
