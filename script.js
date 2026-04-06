@@ -121,9 +121,17 @@ function submitTest() {
   clearInterval(timer);
 
   document.body.innerHTML = `
+  <div style="max-width:500px; margin:50px auto; text-align:center;">
+    
     <img src="logo.png" style="width:120px; display:block; margin:20px auto;">
+    
     <h1>Test Completed</h1>
-    <p>Thank you. Your response has been registered.<br>
-    Please contact the administrator for the next steps.</p>
-  `;
+    
+    <p style="line-height:1.6;">
+      Thank you. Your response has been registered.<br>
+      Please contact the administrator for the next steps.
+    </p>
+
+  </div>
+`;
 }
