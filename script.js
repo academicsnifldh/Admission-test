@@ -1,4 +1,3 @@
-// ================= VARIABLES =================
 let currentIndex = 0;
 let answers = [];
 let selectedQuestions = [];
@@ -7,20 +6,20 @@ let timeLeft = 60 * 60;
 let warningCount = 0;
 let testSubmitted = false;
 
-// ================= ADMIN LOGIN =================
+// LOGIN
 function adminLogin() {
-  const email = document.getElementById("adminEmail").value;
-  const password = document.getElementById("adminPassword").value;
+  let email = document.getElementById("adminEmail").value;
+  let password = document.getElementById("adminPassword").value;
 
   if (email === "admin@nifldh.com" && password === "admin@ldhnif") {
     document.getElementById("admin-box").style.display = "none";
     document.getElementById("rules-box").style.display = "block";
   } else {
-    alert("Invalid admin credentials");
+    alert("Invalid credentials");
   }
 }
 
-// ================= RULES =================
+// RULES
 function toggleRules() {
   document.getElementById("rulesNextBtn").disabled =
     !document.getElementById("rulesCheck").checked;
@@ -31,11 +30,10 @@ function goToLogin() {
   document.getElementById("login-box").style.display = "block";
 }
 
-// ================= ANTI-CHEAT =================
-document.addEventListener("visibilitychange", function () {
+// ANTI CHEAT
+document.addEventListener("visibilitychange", () => {
   if (document.hidden && !testSubmitted) {
     warningCount++;
-
     if (warningCount === 1) {
       alert("Warning: Do not switch tabs.");
     } else {
@@ -45,36 +43,30 @@ document.addEventListener("visibilitychange", function () {
   }
 });
 
-// ================= SHUFFLE =================
+// SHUFFLE
 function shuffle(arr) {
-  let copy = [...arr];
-  for (let i = copy.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
+  return arr.sort(() => Math.random() - 0.5);
 }
 
-// ================= GENERATE QUESTIONS =================
+// QUESTIONS
 function generateQuestions() {
-  let A = shuffle(questionSections.A).slice(0, 10).map(q => ({ ...q, section: "A" }));
-  let B = shuffle(questionSections.B).slice(0, 10).map(q => ({ ...q, section: "B" }));
-  let C = shuffle(questionSections.C).slice(0, 15).map(q => ({ ...q, section: "C" }));
-  let D = shuffle(questionSections.D).slice(0, 15).map(q => ({ ...q, section: "D" }));
-  let E = questionSections.E.map(q => ({ ...q, section: "E" }));
+  let A = shuffle(questionSections.A).slice(0,10).map(q=>({...q,section:"A"}));
+  let B = shuffle(questionSections.B).slice(0,10).map(q=>({...q,section:"B"}));
+  let C = shuffle(questionSections.C).slice(0,15).map(q=>({...q,section:"C"}));
+  let D = shuffle(questionSections.D).slice(0,15).map(q=>({...q,section:"D"}));
+  let E = questionSections.E.map(q=>({...q,section:"E"}));
 
-  return [...A, ...B, ...C, ...D, ...E];
+  return [...A,...B,...C,...D,...E];
 }
 
-// ================= START TEST =================
+// START TEST
 function startTest() {
-
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const phone = document.getElementById("phone").value;
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+  let phone = document.getElementById("phone").value;
 
   if (!name || !email || phone.length !== 10 || isNaN(phone)) {
-    alert("Please enter valid details");
+    alert("Enter valid details");
     return;
   }
 
@@ -87,10 +79,7 @@ function startTest() {
 
   loadQuestion();
 
-  timer = setInterval(function () {
-
-    if (testSubmitted) return;
-
+  timer = setInterval(() => {
     let m = Math.floor(timeLeft / 60);
     let s = timeLeft % 60;
 
@@ -99,52 +88,37 @@ function startTest() {
 
     timeLeft--;
 
-    if (timeLeft < 0) {
-      submitTest();
-    }
-
+    if (timeLeft < 0) submitTest();
   }, 1000);
 }
 
-// ================= LOAD QUESTION =================
+// LOAD QUESTION
 function loadQuestion() {
-
-  if (testSubmitted) return;
-
   let q = selectedQuestions[currentIndex];
 
   document.getElementById("section").innerText = "Section " + q.section;
-  document.getElementById("question-box").innerText =
-    "Q" + (currentIndex + 1) + ". " + q.q;
   document.getElementById("progress").innerText =
     (currentIndex + 1) + " / 60";
 
-  let html = "";
+  document.getElementById("question-box").innerText =
+    "Q" + (currentIndex + 1) + ". " + q.q;
 
+  let html = "";
   q.o.forEach(opt => {
-    html += `
-      <div class="option" onclick="selectOption(this)" data-value="${opt}">
-        ${opt}
-      </div>`;
+    html += `<div class="option" onclick="selectOption(this)" data-value="${opt}">${opt}</div>`;
   });
 
   document.getElementById("options-box").innerHTML = html;
 }
 
-// ================= SELECT OPTION =================
+// SELECT
 function selectOption(el) {
-
-  if (testSubmitted) return;
-
   document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
   el.classList.add("selected");
 }
 
-// ================= NEXT QUESTION =================
+// NEXT
 function nextQuestion() {
-
-  if (testSubmitted) return;
-
   let selected = document.querySelector(".option.selected");
 
   if (!selected) {
@@ -153,7 +127,6 @@ function nextQuestion() {
   }
 
   answers[currentIndex] = selected.getAttribute("data-value");
-
   currentIndex++;
 
   if (currentIndex < selectedQuestions.length) {
@@ -163,45 +136,21 @@ function nextQuestion() {
   }
 }
 
-// ================= SUBMIT TEST =================
+// SUBMIT
 function submitTest() {
-
   if (testSubmitted) return;
   testSubmitted = true;
 
   clearInterval(timer);
 
-  let sectionScores = { A:0, B:0, C:0, D:0, E:0 };
-  let total = 0;
-
-  selectedQuestions.forEach((q, i) => {
-    if (answers[i] === q.a) {
-      sectionScores[q.section]++;
-      total++;
-    }
-  });
-
-  // GOOGLE SHEETS
-  fetch("https://script.google.com/macros/s/AKfycbxIXT8lLdUmWrPluIhXuCU9BtGNTuqPh6iaxQ-7doG64rYOPwxZmtafMozBg8NXloJ1/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbz5VxXN0KtGyLW7sYznbSXXIqc8U1omTjejdpB8cgxuLOFDsGVRfvcRp47CtQC3DvwS/exec", {
     method: "POST",
-    body: JSON.stringify({
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      phone: document.getElementById("phone").value,
-      sectionA: sectionScores.A,
-      sectionB: sectionScores.B,
-      sectionC: sectionScores.C,
-      sectionD: sectionScores.D,
-      sectionE: sectionScores.E,
-      total: total
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
+    body: JSON.stringify({ name: document.getElementById("name").value }),
+    headers: { "Content-Type": "application/json" }
   });
 
   document.body.innerHTML = `
-    <img src="logo.png" style="display:block;margin:20px auto;max-width:120px;">
+    <img src="logo.png" style="width:120px; display:block; margin:20px auto;">
     <h1>Test Completed</h1>
     <p>Thank you. Your response has been registered.<br>
     Please contact the administrator for the next steps.</p>
