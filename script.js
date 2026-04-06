@@ -182,7 +182,7 @@ function submitTest() {
   });
 
   // GOOGLE SHEETS
-  fetch("https://script.google.com/macros/s/AKfycbz5VxXN0KtGyLW7sYznbSXXIqc8U1omTjejdpB8cgxuLOFDsGVRfvcRp47CtQC3DvwS/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxIXT8lLdUmWrPluIhXuCU9BtGNTuqPh6iaxQ-7doG64rYOPwxZmtafMozBg8NXloJ1/exec", {
     method: "POST",
     body: JSON.stringify({
       name: document.getElementById("name").value,
