@@ -40,11 +40,11 @@ B: [
 {q:"Complete the series: 1, 4, 9, 16, __",o:["20","24","25","30"],a:"25"},
 {q:"Complete the series: 7, 14, 21, 28, __",o:["32","35","36","40"],a:"35"},
 
-{q:"Circle, Square, Triangle, Table",o:["Circle","Table","Triangle","Square"],a:"Table"},
-{q:"Red, Blue, Green, Wood",o:["Wood","Blue","Green","Red"],a:"Wood"},
-{q:"Cotton, Silk, Wool, Plastic",o:["Cotton","Silk","Plastic","Wool"],a:"Plastic"},
-{q:"Chair, Sofa, Bed, Painting",o:["Chair","Painting","Bed","Sofa"],a:"Painting"},
-{q:"Marble, Granite, Tile, Paper",o:["Marble","Granite","Tile","Paper"],a:"Paper"},
+{q:"Pick the odd one out: Circle, Square, Triangle, Table",o:["Circle","Table","Triangle","Square"],a:"Table"},
+{q:"Pick the odd one out: Red, Blue, Green, Wood",o:["Wood","Blue","Green","Red"],a:"Wood"},
+{q:"Pick the odd one out: Cotton, Silk, Wool, Plastic",o:["Cotton","Silk","Plastic","Wool"],a:"Plastic"},
+{q:"Pick the odd one out: Chair, Sofa, Bed, Painting",o:["Chair","Painting","Bed","Sofa"],a:"Painting"},
+{q:"Pick the odd one out: Marble, Granite, Tile, Paper",o:["Marble","Granite","Tile","Paper"],a:"Paper"},
 
 {q:"Complete the pattern: A B C A B C __",o:["A","B","D","C"],a:"A"},
 {q:"Complete the pattern: 1 3 5 7 __",o:["8","9","10","11"],a:"9"},
