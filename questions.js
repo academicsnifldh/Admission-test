@@ -49,11 +49,11 @@ B: [
 {q:"Complete the pattern: A B C A B C __",o:["A","B","D","C"],a:"A"},
 {q:"Complete the pattern: 1 3 5 7 __",o:["8","9","10","11"],a:"9"},
 
-{q:"Fabric : Garment :: Wood : ?",o:["Chair","Color","Thread","Paint"],a:"Chair"},
-{q:"Needle : Stitch :: Pencil : ?",o:["Cut","Erase","Draw","Fold"],a:"Draw"},
-{q:"Blueprint : Building :: Sketch : ?",o:["Color","Fabric","Pattern","Design"],a:"Design"},
-{q:"Color : Painting :: Fabric : ?",o:["Thread","Garment","Machine","Print"],a:"Garment"},
-{q:"Space : Interior :: Body : ?",o:["Fashion","Color","Fabric","Style"],a:"Fashion"},
+{q:"If Fabric is to Garment, then Wood is to: ?",o:["Chair","Color","Thread","Paint"],a:"Chair"},
+{q:"If Needle is to Stitch, then Pencil is to: ?",o:["Cut","Erase","Draw","Fold"],a:"Draw"},
+{q:"If Blueprint is to Building, then Sketch is to: ?",o:["Color","Fabric","Pattern","Design"],a:"Design"},
+{q:"If Color is to Painting, then Fabric is to: ?",o:["Thread","Garment","Machine","Print"],a:"Garment"},
+{q:"If Space is to Interior, then Body is to: ?",o:["Fashion","Color","Fabric","Style"],a:"Fashion"},
 
 {q:"If a square is cut diagonally, it forms:",o:["Triangle","Circle","Rectangle","Pentagon"],a:"Triangle"},
 {q:"Mirror image of L faces is:",o:["Same","Opposite","Upward","Downward"],a:"Opposite"},
